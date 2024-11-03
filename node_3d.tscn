@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctmkhtkf8724k"]
+
+[ext_resource type="PackedScene" uid="uid://dqckimp5es3v5" path="res://assets/galacticlake/godotplushie/godou.blend" id="1_xurfi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bqgxy"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_y55fk"]
+sky_material = SubResource("ProceduralSkyMaterial_bqgxy")
+
+[sub_resource type="Environment" id="Environment_xnbx8"]
+background_mode = 2
+sky = SubResource("Sky_y55fk")
+tonemap_mode = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xnbx8")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.07326)
+
+[node name="Godot" parent="." instance=ExtResource("1_xurfi")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
