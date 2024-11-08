@@ -55,7 +55,6 @@ The following is needed to work with GitHub Pages.
 1. Select "Save"
 1. Commit the code to trigger a GitHub Pages deployment (above)
 
-
 ### Export Game as Web App Using Bash
 1. Open the root folder using [VS Code](https://code.visualstudio.com/)
     - If you use GitHub Desktop, select the "Open in Visual Studio" button
