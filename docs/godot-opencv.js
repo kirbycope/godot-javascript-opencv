@@ -1,6 +1,7 @@
 let capture = null;
 let classifier = null;
 let container = null;
+let facesList = [];
 let frame = null;
 let inputElement = null;
 let outputElement = null;
@@ -32,10 +33,10 @@ async function beginStreaming() {
     outputElement.width = 640;
     outputElement.style.opacity = '0.5';
 
-    // Add canvas to div
+    // Add the <canvas> to the <div>
     container.appendChild(outputElement);
 
-    // Add the <div> to the page body
+    // Add the <div> to the page <body>
     document.body.appendChild(container);
 
     // Request webcam access
@@ -51,10 +52,10 @@ async function beginStreaming() {
         // Initialize video capture
         capture = new cv.VideoCapture(inputElement);
 
-        // Load the pre-trained classifier
+        // Initialize a new feature based cascasde classifer
         classifier = new cv.CascadeClassifier();
 
-        // Load classifier file
+        // Load pre-trained Haar Cascade for face detection
         let fileName = 'haarcascade_frontalface_default.xml'
         createFileFromUrl(fileName,
             () => {
@@ -72,7 +73,26 @@ async function beginStreaming() {
     };
 }
 
-/** Processes the webcam video every frame. */
+/** Create a file (in JS memory) from a remote. */
+function createFileFromUrl(fileName, callback) {
+    let request = new XMLHttpRequest();
+    request.open('GET', fileName, true);
+    request.responseType = 'arraybuffer';
+    request.onload = function(ev) {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                let data = new Uint8Array(request.response);
+                cv.FS_createDataFile('/', fileName, data, true, false, false);
+                callback();
+            } else {
+                console.error('Failed to load ' + fileName + ' status: ' + request.status);
+            }
+        }
+    };
+    request.send();
+}
+
+/** Processes the webcam video. */
 function processVideo() {
 
     // Get the start time
@@ -94,12 +114,19 @@ function processVideo() {
     // Detect faces
     classifier.detectMultiScale(gray, faces, 1.1, 3, 0);
     
-    // Draw rectangles around detected faces
+    // Draw rectangles around the detected faces and store the results
     for (let i = 0; i < faces.size(); ++i) {
         let face = faces.get(i);
         let point1 = new cv.Point(face.x, face.y);
         let point2 = new cv.Point(face.x + face.width, face.y + face.height);
         cv.rectangle(frame, point1, point2, [0, 0, 255, 255], 2);
+        // Append to faceslist
+        facesList[i] = {
+            x: Math.floor(face.x),
+            y: Math.floor(face.y),
+            w: Math.floor(face.width),
+            h: Math.floor(face.height)
+        };
     }
 
     // Show result
@@ -112,23 +139,5 @@ function processVideo() {
     // Schedule next frame
     let delay = 1000/FPS - (Date.now() - begin);
     setTimeout(processVideo, Math.max(0, delay));
-}
 
-/** Create a file (in JS memory) from a remote. */
-function createFileFromUrl(fileName, callback) {
-    let request = new XMLHttpRequest();
-    request.open('GET', fileName, true);
-    request.responseType = 'arraybuffer';
-    request.onload = function(ev) {
-        if (request.readyState === 4) {
-            if (request.status === 200) {
-                let data = new Uint8Array(request.response);
-                cv.FS_createDataFile('/', fileName, data, true, false, false);
-                callback();
-            } else {
-                console.error('Failed to load ' + fileName + ' status: ' + request.status);
-            }
-        }
-    };
-    request.send();
 }
