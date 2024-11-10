@@ -3,6 +3,10 @@
 # godot-javascript-opencv
 Use Godot and OpenCV.js to display the webcam video in a Godot Scene.
 
+## Technologies Used
+[Godot](https://godotengine.org/) is a cross-platform, free and open-source game engine released under the permissive MIT license. </br>
+[OpenCV](https://opencv.org/) (Open Source Computer Vision Library) is a library of programming functions mainly for real-time computer vision. </br>
+
 ## Game Pack
 This game can be [exported](https://docs.godotengine.org/en/stable/tutorials/export/exporting_pcks.html#generating-pck-files) as a `.pck` and [imported](https://docs.godotengine.org/en/stable/tutorials/export/exporting_pcks.html#opening-pck-files-at-runtime) into another Godot game client.
 
