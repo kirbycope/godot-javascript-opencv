@@ -11,7 +11,11 @@ Use Godot and OpenCV.js to display the webcam video in a Godot Scene.
 1. Clone _this_ repo
 1. Import [project.godot](project.godot) using Godot
 1. Make changes to the Godot project and then Export to Web (first complete, _Web Export_ below)
+	- I can't get the Export to include the .js and .xml files when running from Godot using "Remote Debug"
+	- This is defined in [export_presets.cfg](export_presets.cfg) unnder `include_filter=""`
+	- I put the .js and .xml files in the root of this repo but they didn't copy, so I manually moved them to [/docs](/docs)
 1. Make changes to the JavaScript in VS Code and then save (first complete, _Access localhost from Devices on Same Wifi Network_ below)
+	- When you save in VS Code and Live Server is already running, then the page will automatically reload with those changes
 
 <details>
 <summary>Export Game as Pack</summary>
