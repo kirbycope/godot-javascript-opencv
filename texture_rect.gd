@@ -38,3 +38,24 @@ func _process(_delta: float) -> void:
 	else:
 		# If no faces are detected, return to the original position
 		plush.position = Vector3(0.0, 0.0, 0.0)
+
+	# Get canvas image data (removing data URL prefix)
+	var base_64_string = JavaScriptBridge.eval("getCanvasImage()").split(",")[1]
+
+	# Convert the Base64 string to raw data
+	var raw_data = Marshalls.base64_to_raw(base_64_string)
+
+	# Create an Image from the raw data
+	var image = Image.new()
+
+	# Load the image from memory
+	var result = image.load_png_from_buffer(raw_data)
+
+	# Check if the image loaded from the buffer
+	if !result:
+
+		# Create a new `ImageTexture` and initializes it by allocating and setting the data from an `Image`
+		image = ImageTexture.create_from_image(image)
+
+		# Set _this_ node's Texture2D resource
+		texture = image

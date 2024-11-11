@@ -25,6 +25,7 @@ async function beginStreaming() {
     container.style.left = '50%';
     container.style.transform = 'translate(-50%, -50%)';
     container.style.zIndex = '1';
+    container.style.display = 'none';
 
     // Create the <canvas> element
     outputElement = document.createElement('canvas');
@@ -90,6 +91,11 @@ function createFileFromUrl(fileName, callback) {
         }
     };
     request.send();
+}
+
+/** Get canvas image data in base64 format. */
+function getCanvasImage() {
+    return outputElement.toDataURL('image/png');
 }
 
 /** Processes the webcam video. */
