@@ -1,7 +1,7 @@
 ![Thumbnail](/ci/thumbnail.png)
 
 # godot-javascript-opencv
-Use Godot and OpenCV.js to display the webcam video in a Godot Scene.
+Use OpenCV and JavaScript to display the webcam video in a Godot Scene.
 
 ## Technologies Used
 [Godot](https://godotengine.org/) is a cross-platform, free and open-source game engine released under the permissive MIT license. </br>
